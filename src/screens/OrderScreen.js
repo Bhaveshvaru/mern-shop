@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import { getOrderDetails, payOrder } from '../actions/orderActions'
 import Loader from '../components/Loader'
-import { useParams,useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { PayPalButton } from 'react-paypal-button-v2'
-import {ORDER_PAY_RESET} from "../constants/orderConstants"
+import { ORDER_PAY_RESET } from '../constants/orderConstants'
 
 const OrderScreen = () => {
   let { id } = useParams()
@@ -42,7 +42,9 @@ const OrderScreen = () => {
     }
 
     const addPayPalScript = async () => {
-      const { data: clientId } = await axios.get('/api/config/paypal')
+      const { data: clientId } = await axios.get(
+        'https://proshopmern12.herokuapp.com/api/config/paypal'
+      )
       const script = document.createElement('script')
       script.type = 'text/javascript'
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
@@ -53,7 +55,7 @@ const OrderScreen = () => {
       document.body.appendChild(script)
     }
 
-    if (!order || successPay ) {
+    if (!order || successPay) {
       dispatch({ type: ORDER_PAY_RESET })
       dispatch(getOrderDetails(id))
     } else if (!order.isPaid) {
@@ -63,13 +65,12 @@ const OrderScreen = () => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, id, successPay, order,history ,userInfo])
+  }, [dispatch, id, successPay, order, history, userInfo])
 
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult)
     dispatch(payOrder(id, paymentResult))
   }
-
 
   return loading ? (
     <Loader />

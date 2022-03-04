@@ -29,7 +29,7 @@ import { USER_LOGOUT } from "../constants/userConstants"
         },
       }
   
-      const { data } = await axios.post(`/api/orders`, order, config)
+      const { data } = await axios.post(`https://proshopmern12.herokuapp.com/api/orders`, order, config)
   
    
       dispatch({
@@ -75,7 +75,7 @@ import { USER_LOGOUT } from "../constants/userConstants"
             },
           }
       
-          const { data } = await axios.get(`/api/orders/${id}`, config)
+          const { data } = await axios.get(`https://proshopmern12.herokuapp.com/api/orders/${id}`, config)
       
        
           dispatch({
@@ -116,7 +116,7 @@ import { USER_LOGOUT } from "../constants/userConstants"
             },
           }
       
-          const { data } = await axios.put(`/api/orders/${orderID}/pay`,paymentResult, config)
+          const { data } = await axios.put(`https://proshopmern12.herokuapp.com/api/orders/${orderID}/pay`,paymentResult, config)
       
        
           dispatch({
