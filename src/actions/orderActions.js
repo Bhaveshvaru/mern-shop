@@ -29,7 +29,7 @@ import { USER_LOGOUT } from "../constants/userConstants"
         },
       }
   
-      const { data } = await axios.post(`https://proshopmern12.herokuapp.com/api/orders`, order, config)
+      const { data } = await axios.post(`https://shopmern.onrender.com/api/orders`, order, config)
   
    
       dispatch({

@@ -12,7 +12,7 @@ export const login = (email , password) => async (dispatch)=>{
                 'Content-Type':"application/json"
             }
         }
-        const { data } = await axios.post('https://proshopmern12.herokuapp.com/api/users/login',{
+        const { data } = await axios.post('https://shopmern.onrender.com/api/users/login',{
             email,password
         },config)
 
