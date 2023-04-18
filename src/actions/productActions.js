@@ -33,7 +33,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
     const { data } = await axios.get(
-      `https://proshopmern12.herokuapp.com/api/products/${id}`
+      `https://shopmern.onrender.com/api/products/${id}`
     )
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,

@@ -51,7 +51,7 @@ export const register = (name,email , password) => async (dispatch)=>{
                 'Content-Type':"application/json"
             }
         }
-        const { data } = await axios.post('https://proshopmern12.herokuapp.com/api/users',{
+        const { data } = await axios.post('https://shopmern.onrender.com/api/users',{
            name, email,password
         },config)
 
@@ -97,7 +97,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
         },
       }
   
-      const { data } = await axios.put(`https://proshopmern12.herokuapp.com/api/users/profile`, user, config)
+      const { data } = await axios.put(`https://shopmern.onrender.com/api/users/profile`, user, config)
   
       dispatch({
         type: USER_UPDATE_PROFILE_SUCCESS,
@@ -139,7 +139,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
         },
       }
   
-      const { data } = await axios.get(`https://proshopmern12.herokuapp.com/api/users/${id}`, config)
+      const { data } = await axios.get(`https://shopmern.onrender.com/api/users/${id}`, config)
   
       dispatch({
         type: USER_DETAILS_SUCCESS,

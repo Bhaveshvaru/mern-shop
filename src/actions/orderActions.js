@@ -75,7 +75,7 @@ import { USER_LOGOUT } from "../constants/userConstants"
             },
           }
       
-          const { data } = await axios.get(`https://proshopmern12.herokuapp.com/api/orders/${id}`, config)
+          const { data } = await axios.get(`https://shopmern.onrender.com/api/orders/${id}`, config)
       
        
           dispatch({
@@ -116,7 +116,7 @@ import { USER_LOGOUT } from "../constants/userConstants"
             },
           }
       
-          const { data } = await axios.put(`https://proshopmern12.herokuapp.com/api/orders/${orderID}/pay`,paymentResult, config)
+          const { data } = await axios.put(`https://https://shopmern.onrender.com/api/orders/${orderID}/pay`,paymentResult, config)
       
        
           dispatch({
