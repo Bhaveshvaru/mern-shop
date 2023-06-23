@@ -1,42 +1,131 @@
 import {
-    ORDER_CREATE_SUCCESS,
-    ORDER_CREATE_REQUEST,
-    ORDER_CREATE_FAIL,
-    ORDER_DETAILS_REQUEST,
-    ORDER_DETAILS_SUCCESS,
-    ORDER_DETAILS_FAIL,
-    ORDER_PAY_SUCCESS,
-    ORDER_PAY_FAIL,
-    ORDER_PAY_REQUEST
-} from "../constants/orderConstants" 
-import axios from "axios"
-import { USER_LOGOUT } from "../constants/userConstants"
+  ORDER_CREATE_SUCCESS,
+  ORDER_CREATE_REQUEST,
+  ORDER_CREATE_FAIL,
+  ORDER_DETAILS_REQUEST,
+  ORDER_DETAILS_SUCCESS,
+  ORDER_DETAILS_FAIL,
+  ORDER_PAY_SUCCESS,
+  ORDER_PAY_FAIL,
+  ORDER_PAY_REQUEST,
+} from '../constants/orderConstants'
+import axios from 'axios'
+import { USER_LOGOUT } from '../constants/userConstants'
 
- export const createOrder = (order) => async (dispatch, getState) => {
+export const createOrder = (order) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_CREATE_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.post(
+      `http://35.175.142.165:2000/api/orders`,
+      order,
+      config
+    )
+
+    dispatch({
+      type: ORDER_CREATE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ORDER_CREATE_FAIL,
+      payload: message,
+    })
+  }
+}
+export const logout = () => async (dispatch) => {
+  localStorage.removeItem('userInfo')
+  dispatch({ type: USER_LOGOUT })
+}
+
+export const getOrderDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: ORDER_DETAILS_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get(
+      `http://35.175.142.165:2000/api/orders/${id}`,
+      config
+    )
+
+    dispatch({
+      type: ORDER_DETAILS_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
+    dispatch({
+      type: ORDER_DETAILS_FAIL,
+      payload: message,
+    })
+  }
+}
+
+export const payOrder =
+  (orderID, paymentResult) => async (dispatch, getState) => {
     try {
       dispatch({
-        type: ORDER_CREATE_REQUEST,
+        type: ORDER_PAY_REQUEST,
       })
-  
+
       const {
         userLogin: { userInfo },
       } = getState()
-  
+
       const config = {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userInfo.token}`,
         },
       }
-  
-      const { data } = await axios.post(`https://shopmern.onrender.com/api/orders`, order, config)
-  
-   
+
+      const { data } = await axios.put(
+        `http://35.175.142.165:2000/api/orders/${orderID}/pay`,
+        paymentResult,
+        config
+      )
+
       dispatch({
-        type: ORDER_CREATE_SUCCESS,
+        type: ORDER_PAY_SUCCESS,
         payload: data,
       })
-
     } catch (error) {
       const message =
         error.response && error.response.data.message
@@ -46,96 +135,8 @@ import { USER_LOGOUT } from "../constants/userConstants"
         dispatch(logout())
       }
       dispatch({
-        type: ORDER_CREATE_FAIL,
+        type: ORDER_PAY_FAIL,
         payload: message,
       })
     }
-    
   }
-  export const logout = ()=> async(dispatch)=>{
-    localStorage.removeItem('userInfo')
-    dispatch({type:USER_LOGOUT})
-    }
-
-
-
-    export const getOrderDetails = (id) => async (dispatch, getState) => {
-        try {
-          dispatch({
-            type: ORDER_DETAILS_REQUEST,
-          })
-      
-          const {
-            userLogin: { userInfo },
-          } = getState()
-      
-          const config = {
-            headers: {
-              Authorization: `Bearer ${userInfo.token}`,
-            },
-          }
-      
-          const { data } = await axios.get(`https://shopmern.onrender.com/api/orders/${id}`, config)
-      
-       
-          dispatch({
-            type: ORDER_DETAILS_SUCCESS,
-            payload: data,
-          })
-    
-        } catch (error) {
-          const message =
-            error.response && error.response.data.message
-              ? error.response.data.message
-              : error.message
-          if (message === 'Not authorized, token failed') {
-            dispatch(logout())
-          }
-          dispatch({
-            type: ORDER_DETAILS_FAIL,
-            payload: message,
-          })
-        }
-        
-      }
-
-      export const payOrder = (orderID,paymentResult) => async (dispatch, getState) => {
-        try {
-          dispatch({
-            type: ORDER_PAY_REQUEST,
-          })
-      
-          const {
-            userLogin: { userInfo },
-          } = getState()
-      
-          const config = {
-            headers: {
-                'Content-Type': 'application/json',
-              Authorization: `Bearer ${userInfo.token}`,
-            },
-          }
-      
-          const { data } = await axios.put(`https://https://shopmern.onrender.com/api/orders/${orderID}/pay`,paymentResult, config)
-      
-       
-          dispatch({
-            type: ORDER_PAY_SUCCESS,
-            payload: data,
-          })
-    
-        } catch (error) {
-          const message =
-            error.response && error.response.data.message
-              ? error.response.data.message
-              : error.message
-          if (message === 'Not authorized, token failed') {
-            dispatch(logout())
-          }
-          dispatch({
-            type: ORDER_PAY_FAIL,
-            payload: message,
-          })
-        }
-        
-      }

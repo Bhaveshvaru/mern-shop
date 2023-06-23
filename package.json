@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "proxy": "https://shopmern.onrender.com/",
+  "proxy": "http://35.175.142.165:2000/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
