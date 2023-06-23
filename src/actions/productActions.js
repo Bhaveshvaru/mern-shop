@@ -11,9 +11,7 @@ import {
 export const listProduct = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST })
-    const { data } = await axios.get(
-      'http://35.175.142.165:2000/api/products'
-    )
+    const { data } = await axios.get('http://35.175.142.165:2000/api/products')
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
@@ -32,9 +30,7 @@ export const listProduct = () => async (dispatch) => {
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
-    const { data } = await axios.get(
-      `http://35.175.142.165:2000/api/products/${id}`
-    )
+    const { data } = await axios.get(`35.175.142.165:2000/api/products/${id}`)
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
       payload: data,
