@@ -13,7 +13,7 @@ export const listProduct = () => async (dispatch) => {
     dispatch({ type: PRODUCT_LIST_REQUEST })
     let headers = { 'Access-Control-Allow-Origin': '*' }
     const { data } = await axios.get(
-      'http://35.175.142.165:2000/api/products',
+      'https://shopmern.onrender.com/api/products',
       headers
     )
     dispatch({
@@ -35,7 +35,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST })
     const { data } = await axios.get(
-      `http://35.175.142.165:2000/api/products/${id}`
+      `https://shopmern.onrender.com/api/products/${id}`
     )
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,

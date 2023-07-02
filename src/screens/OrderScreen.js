@@ -43,7 +43,7 @@ const OrderScreen = () => {
 
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get(
-        'http://35.175.142.165:2000/api/config/paypal'
+        'https://shopmern.onrender.com/api/config/paypal'
       )
       const script = document.createElement('script')
       script.type = 'text/javascript'

@@ -30,7 +30,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.post(
-      `http://35.175.142.165:2000/api/orders`,
+      `https://shopmern.onrender.com/api/orders`,
       order,
       config
     )
@@ -75,7 +75,7 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.get(
-      `http://35.175.142.165:2000/api/orders/${id}`,
+      `https://shopmern.onrender.com/api/orders/${id}`,
       config
     )
 
@@ -117,7 +117,7 @@ export const payOrder =
       }
 
       const { data } = await axios.put(
-        `http://35.175.142.165:2000/api/orders/${orderID}/pay`,
+        `https://shopmern.onrender.com/api/orders/${orderID}/pay`,
         paymentResult,
         config
       )
