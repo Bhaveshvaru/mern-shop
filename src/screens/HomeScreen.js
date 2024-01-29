@@ -9,16 +9,10 @@ import { data } from '../data/data'
 
 const HomeScreen = () => {
   const productList = useSelector((state) => state.productList)
-  let { loading, products, error } = productList
+  let { loading, error } = productList
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(listProduct())
-    setTimeout(myGreeting, 500)
-    function myGreeting() {
-      if (products && products !== null) {
-        products = data
-      }
-    }
   }, [dispatch])
 
   return (
@@ -30,7 +24,7 @@ const HomeScreen = () => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <Row>
-          {products.map((product) => (
+          {data.map((product) => (
             <Col key={product._id} sm={12} md={6} xl={3}>
               <Product product={product} />
             </Col>
