@@ -8,8 +8,6 @@ import Loader from '../components/Loader'
 import { data } from '../data/data'
 
 const HomeScreen = () => {
-  const productList = useSelector((state) => state.productList)
-  let { loading, error } = productList
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(listProduct())
@@ -18,10 +16,10 @@ const HomeScreen = () => {
   return (
     <>
       <h2>Latest Products</h2>
-      {loading ? (
+      {data ? (
         <Loader></Loader>
-      ) : error ? (
-        <Message variant='danger'>{error}</Message>
+      ) : 'error' ? (
+        <Message variant='danger'>'error'</Message>
       ) : (
         <Row>
           {data.map((product) => (
