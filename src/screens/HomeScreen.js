@@ -5,14 +5,22 @@ import Product from '../components/Product'
 import { listProduct } from '../actions/productActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import { data } from '../data/data'
 
 const HomeScreen = () => {
   const productList = useSelector((state) => state.productList)
-  const { loading, products, error } = productList
+  let { loading, products, error } = productList
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(listProduct())
+    setTimeout(myGreeting, 500)
+    function myGreeting() {
+      if (products && products !== null) {
+        products = data
+      }
+    }
   }, [dispatch])
+
   return (
     <>
       <h2>Latest Products</h2>
